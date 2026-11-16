@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Institutional Trading Academy</title>
+  <meta name="description" content="Institutional Trading Academy — Roman Urdu trading course: market structure, liquidity, aur risk management.">
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS (Play CDN — koi build step nahi) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Theme colors: CLAUDE.md design ke mutabiq
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:  '#090d16', // page background
+            card: '#111827', // cards
+            bull: '#10b981', // emerald — bullish / correct
+            bear: '#ef4444', // crimson — bearish / mistake
+            liq:  '#f59e0b'  // amber — liquidity / warning
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'Segoe UI', 'sans-serif'] }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Base: dark background, smooth fonts */
+    html { scroll-behavior: smooth; }
+    body { background: #090d16; -webkit-font-smoothing: antialiased; }
+
+    /* Dark scrollbars */
+    * { scrollbar-width: thin; scrollbar-color: #334155 transparent; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+
+    /* Desktop par sidebar hamesha nazar aaye (mobile class override) */
+    @media (min-width: 768px) {
+      #sidebar { transform: none !important; }
+    }
+
+    /* View change par halka fade-in */
+    .ita-view { animation: itaFade .25s ease-out; }
+    @keyframes itaFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+
+<body class="bg-ink text-slate-200 font-sans min-h-screen">
+
+  <!-- ============ MOBILE TOP BAR (sirf phone par) ============ -->
+  <header class="md:hidden sticky top-0 z-20 flex items-center justify-between px-4 h-14 bg-ink/95 backdrop-blur border-b border-slate-800">
+    <button id="menu-btn" type="button" class="p-2 -ml-2 rounded-lg text-slate-300 hover:bg-slate-800" aria-label="Menu kholo">
+      <!-- Hamburger icon -->
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <span class="font-bold text-white text-sm tracking-wide">Institutional <span class="text-bull">Trading</span> Academy</span>
+    <span class="w-8"></span>
+  </header>
+
+  <!-- Mobile par sidebar khulne par peeche ka dark overlay -->
+  <div id="sidebar-overlay" class="hidden md:hidden fixed inset-0 z-30 bg-black/60"></div>
+
+  <div class="md:flex">
+    <!-- ============ SIDEBAR ============ -->
+    <aside id="sidebar"
+      class="fixed md:sticky top-0 left-0 z-40 h-screen w-64 shrink-0 -translate-x-full md:translate-x-0 transition-transform duration-200 bg-[#0c1220] border-r border-slate-800 flex flex-col">
+      <!-- Brand -->
+      <div class="px-5 py-5 border-b border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-bull/15 ring-1 ring-bull/40 flex items-center justify-center">
+            <!-- Candle logo -->
+            <svg viewBox="0 0 24 24" class="w-6 h-6"><line x1="7" y1="3" x2="7" y2="21" stroke="#ef4444" stroke-width="1.6"/><rect x="5" y="7" width="4" height="8" fill="#ef4444" rx="0.5"/><line x1="17" y1="2" x2="17" y2="20" stroke="#10b981" stroke-width="1.6"/><rect x="15" y="5" width="4" height="11" fill="#10b981" rx="0.5"/></svg>
+          </div>
+          <div class="leading-tight">
+            <p class="font-extrabold text-white text-sm">Institutional</p>
+            <p class="text-xs text-slate-400">Trading Academy</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation: app.js registered modules se khud banata hai -->
+      <nav id="nav" class="flex-1 overflow-y-auto p-3 space-y-1" aria-label="Main navigation"></nav>
+
+      <!-- Footer -->
+      <div class="p-4 border-t border-slate-800 text-[11px] text-slate-500 leading-5">
+        <p><span class="text-liq">⚠</span> Sirf education ke liye. Financial advice nahi.</p>
+        <p class="mt-1">v1 · Part 1 / 5</p>
+      </div>
+    </aside>
+
+    <!-- ============ MAIN CONTENT (router yahan render karta hai) ============ -->
+    <main id="main" class="flex-1 min-w-0 px-4 py-6 md:px-8 md:py-8" tabindex="-1"></main>
+  </div>
+
+  <!-- Toast notifications -->
+  <div id="toast-root" class="fixed bottom-4 right-4 left-4 sm:left-auto z-50 flex flex-col gap-2 items-stretch sm:items-end pointer-events-none"></div>
+
+  <!-- =====================================================================
+       SCRIPTS — order zaroori hai:
+       1) store.js  2) app.js  3) course.js (engine)  4) data files  5) modules
+       ===================================================================== -->
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/course.js"></script>
+  <script src="js/course-data-1.js"></script>
+
+  <!-- PART 2: Course content (Phase 2 onwards) — file banne par uncomment karo -->
+  <!-- <script src="js/course-data-2.js"></script> -->
+
+  <!-- PART 3: Chart Simulator module (Store key: sim_scores) -->
+  <!-- <script src="js/simulator.js"></script> -->
+
+  <!-- PART 3/4: Tools module — calculators, backtest (Store keys: calc, backtest) -->
+  <!-- <script src="js/tools.js"></script> -->
+
+  <!-- PART 4: Trading Journal module (Store keys: setups, demo) -->
+  <!-- <script src="js/journal.js"></script> -->
+
+  <!-- PART 5: Flashcards module (Store key: flashcards) -->
+  <!-- <script src="js/flashcards.js"></script> -->
+</body>
+</html>
